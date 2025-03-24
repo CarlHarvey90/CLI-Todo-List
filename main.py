@@ -1,33 +1,27 @@
 import sys
-menu = ("Select one of the following options: \n"
+menu = ("Select one of the following options by entering the option number: \n"
   "1. Add another item \n"
   "2. Remove an item \n"
   "3. View item list \n"
-  "4. Home \n")
+  "4. Exit \n")
 
-def add(user_input):
-  print("New item added " + user_input)
+def add(add_item):
+  print("New item added: " + add_item)
   print(menu)
-  #print("Select one of the following options: ")
-  #print("1. Add another item")
-  #print("2. Remove an item")
-  #print("3. View item list")
-  #print("4. Home")
-  
+
+def delete(delete_item):
+  print("Item deleted: " + delete_item)  
+  print(menu)
 
 def main():
-  welcome = ("Welcome to the Todo list app. Please choose one of the following options: \n"
-  "1. Add an item \n"
-  "2. Remove and item \n"
-  "3. View item list \n"
-  "4. Exit")
+  welcome = ("Welcome to the Todo list app. \n\n" + menu)
   print(welcome)
   #print(menu)
   while True:
     
     user_input = input()
     
-    if user_input.lower() == "exit" or "4":
+    if user_input == '4':
       print("Exiting Todo List")
       break
     
@@ -35,6 +29,16 @@ def main():
       print("Type in a item to add to the list: ")
       new_item = input()
       add(new_item)
+    
+    if user_input == '2':
+      print("Type in a item to remove from the list: ")
+      remove_item = input()
+      delete(remove_item)
+
+    if user_input == '3':
+      print("See the list of items below: ")
+      remove_item = input()
+      delete(remove_item)
 
     #print(user_input)
 if __name__ == '__main__':
