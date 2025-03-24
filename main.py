@@ -18,8 +18,8 @@ def delete(delete_item):
 
 def main():
   welcome = ("Welcome to the Todo list app. \n\n")
-  menu()
   print(welcome)
+  menu()
   #print(menu)
   while True:
     
