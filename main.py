@@ -1,20 +1,24 @@
 import sys
-menu = ("Select one of the following options by entering the option number: \n"
-  "1. Add another item \n"
-  "2. Remove an item \n"
-  "3. View item list \n"
-  "4. Exit \n")
+
+def menu():
+  menu = ("Select one of the following options by entering the option number: \n"
+    "1. Add an item \n"
+    "2. Remove an item \n"
+    "3. View item list \n"
+    "4. Exit \n")
+  print(menu)
 
 def add(add_item):
   print("New item added: " + add_item)
-  print(menu)
+  menu()
 
 def delete(delete_item):
   print("Item deleted: " + delete_item)  
-  print(menu)
+  menu()
 
 def main():
-  welcome = ("Welcome to the Todo list app. \n\n" + menu)
+  welcome = ("Welcome to the Todo list app. \n\n")
+  menu()
   print(welcome)
   #print(menu)
   while True:
