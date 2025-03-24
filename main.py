@@ -16,6 +16,10 @@ def delete(delete_item):
   print("Item deleted: " + delete_item)  
   menu()
 
+def list():
+  #print("New item added: " + add_item)
+  menu()
+
 def main():
   welcome = ("Welcome to the Todo list app. \n\n")
   print(welcome)
@@ -41,8 +45,7 @@ def main():
 
     if user_input == '3':
       print("See the list of items below: ")
-      remove_item = input()
-      delete(remove_item)
+      list()
 
     #print(user_input)
 if __name__ == '__main__':
