@@ -8,12 +8,20 @@ def menu():
     "4. Exit \n")
   print(menu)
 
+def writeJSON(a):
+  print("write to JSON")
+
+def removeJSON(a):
+  print("Remove from JSON")
+
 def add(add_item):
-  print("New item added: " + add_item)
+  writeJSON(add_item)
+  print("New item added: " + add_item + "\n")
   menu()
 
 def delete(delete_item):
-  print("Item deleted: " + delete_item)  
+  removeJSON(delete_item)
+  print("Item deleted: " + delete_item + "\n")  
   menu()
 
 def list():
