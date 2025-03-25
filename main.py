@@ -13,10 +13,17 @@ def menu():
 
 def writeJSON(a):
   filename = "Todo.json"
-  input_data = {} 
-  input_data["id"] = str(uuid.uuid4())
-  input_data["Task"] = a
-  input_data["Status"] = "Pending"
+
+  #input_data = {} 
+  #input_data["id"] = str(uuid.uuid4())
+  #input_data["Task"] = a
+  #input_data["Status"] = "Pending"
+
+  input_data = { 
+    "id": str(uuid.uuid4()),
+    "Task": a,
+    "Status": "Pending"
+  }
 
   # Check if the file exists and read existing data
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
@@ -24,7 +31,7 @@ def writeJSON(a):
       try:
         data = json.load(file)  # Load existing data
         if not isinstance(data, list):
-          data = []  # Ensure data is a list
+          data = [data]  # Ensure data is a list
       except (json.JSONDecodeError, TypeError):
         data = []  # Handle empty or invalid JSON file
   else:
