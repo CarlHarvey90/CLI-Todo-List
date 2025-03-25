@@ -11,39 +11,39 @@ def menu():
     "4. Exit \n")
   print(menu)
 
-def writeJSON(a):
+def writeJSON(task):
   filename = "Todo.json"
 
-  #input_data = {} 
-  #input_data["id"] = str(uuid.uuid4())
-  #input_data["Task"] = a
-  #input_data["Status"] = "Pending"
-
-  input_data = { 
+  # Create new task data
+  input_data = {
     "id": str(uuid.uuid4()),
-    "Task": a,
+    "Task": task,
     "Status": "Pending"
   }
 
-  # Check if the file exists and read existing data
+  # Ensure the file exists and has valid JSON content
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     with open(filename, "r") as file:
       try:
         data = json.load(file)  # Load existing data
-        if not isinstance(data, list):
-          data = [data]  # Ensure data is a list
+        if not isinstance(data, list):  
+          data = []  # Convert a single entry into a list
       except (json.JSONDecodeError, TypeError):
-        data = []  # Handle empty or invalid JSON file
+        data = []  # Handle invalid JSON by resetting to empty list
   else:
-        data = []
+    data = []  # If file doesn't exist or is empty, start with an empty list
 
-  # Append new user data
+  # Append new task
   data.append(input_data)
 
-  with open("Todo.json", "w") as file:
-        json.dump(data, file, indent=4)
+  # Debugging: Print data before writing
+  print("Updated Data:", json.dumps(data, indent=4))
 
-  print("write to JSON")
+  # Write updated data back to JSON file
+  with open(filename, "w") as file:
+    json.dump(data, file, indent=4)
+
+  print("Task added to JSON")
 
 def removeJSON(a):
   print("Remove from JSON")
