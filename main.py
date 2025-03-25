@@ -1,4 +1,7 @@
 import sys
+import json
+import uuid
+import os
 
 def menu():
   menu = ("Select one of the following options by entering the option number: \n"
@@ -9,6 +12,30 @@ def menu():
   print(menu)
 
 def writeJSON(a):
+  filename = "Todo.json"
+  input_data = {} 
+  input_data["id"] = str(uuid.uuid4())
+  input_data["Task"] = a
+  input_data["Status"] = "Pending"
+
+  # Check if the file exists and read existing data
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    with open(filename, "r") as file:
+      try:
+        data = json.load(file)  # Load existing data
+        if not isinstance(data, list):
+          data = []  # Ensure data is a list
+      except (json.JSONDecodeError, TypeError):
+        data = []  # Handle empty or invalid JSON file
+  else:
+        data = []
+
+  # Append new user data
+  data.append(input_data)
+
+  with open("Todo.json", "w") as file:
+        json.dump(data, file, indent=4)
+
   print("write to JSON")
 
 def removeJSON(a):
