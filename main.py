@@ -2,6 +2,15 @@ import sys
 import json
 import uuid
 import os
+from itertools import count
+
+def idCount():
+  with open('Todo.json', "r") as f:
+    data = json.load(f)
+    id = max(item["id"] for item in data)
+    counter = count(id + 1)
+    #print(counter)
+  return next(counter) #returns an integer
 
 def menu():
   menu = ("Select one of the following options by entering the option number: \n"
@@ -16,7 +25,7 @@ def writeJSON(task):
 
   # Create new task data
   input_data = {
-    "id": str(uuid.uuid4()),
+    "id": int(idCount()),#str(uuid.uuid4()),
     "Task": task,
     "Status": "Pending"
   }
@@ -41,16 +50,39 @@ def writeJSON(task):
   print("Task added to JSON")
 
 def removeJSON(a):
-  print("Remove from JSON")
+  with open('Todo.json', "r") as f:
+    data = json.load(f)
+  
+  # Find the index of the item where id = user_input
+  item_to_remove = next((i for i, item in enumerate(data) if item["id"] == int(a)), None)
+  #print(item_to_remove) 
+  #print("hello")
+
+  #print(data["id"][int(item_to_remove)])
+
+  #if item_to_remove in data:
+   # remove_id = data.pop("id"[item_to_remove])
+  
+
+  # If the item with id = 4 is found, pop it
+  if item_to_remove is not None:
+    data.pop(item_to_remove)
+  
+ # Write updated data back to JSON file
+  with open('Todo.json', "w") as file:
+    json.dump(data, file, indent=4) 
+  
+  print("Item id " + a + " Removed from List")
+  #menu()
 
 def add(add_item):
   writeJSON(add_item)
-  print("New item added: " + add_item + "\n")
+  #print("New item added: " + add_item + "\n")
   menu()
 
 def delete(delete_item):
   removeJSON(delete_item)
-  print("Item deleted: " + delete_item + "\n")  
+  #print("Item deleted: " + delete_item + "\n")  
   menu()
 
 def list():
@@ -76,7 +108,7 @@ def main():
       add(new_item)
     
     if user_input == '2':
-      print("Type in a item to remove from the list: ")
+      print("Type the ID of the item to remove it from the list: ")
       remove_item = input()
       delete(remove_item)
 
