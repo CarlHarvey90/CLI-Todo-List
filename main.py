@@ -24,12 +24,7 @@ def writeJSON(task):
   # Ensure the file exists and has valid JSON content
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     with open(filename, "r") as file:
-      try:
-        data = json.load(file)  # Load existing data
-        if not isinstance(data, list):  
-          data = []  # Convert a single entry into a list
-      except (json.JSONDecodeError, TypeError):
-        data = []  # Handle invalid JSON by resetting to empty list
+      data = json.load(file)  # Load existing data
   else:
     data = []  # If file doesn't exist or is empty, start with an empty list
 
