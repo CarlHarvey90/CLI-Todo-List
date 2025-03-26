@@ -1,6 +1,7 @@
-import sys
+#import sys
 import json
-import uuid
+#import uuid
+from prettytable import PrettyTable
 import os
 from itertools import count
 
@@ -61,14 +62,14 @@ def removeJSON(a):
   #print(data["id"][int(item_to_remove)])
 
   #if item_to_remove in data:
-   # remove_id = data.pop("id"[item_to_remove])
+  # remove_id = data.pop("id"[item_to_remove])
   
 
   # If the item with id = 4 is found, pop it
   if item_to_remove is not None:
     data.pop(item_to_remove)
   
- # Write updated data back to JSON file
+  # Write updated data back to JSON file
   with open('Todo.json', "w") as file:
     json.dump(data, file, indent=4) 
   
@@ -86,7 +87,32 @@ def delete(delete_item):
   menu()
 
 def list():
-  #print("New item added: " + add_item)
+  #table = PrettyTable(["ID", "Task", "Status"])
+
+  with open('Todo.json', "r") as f:
+    data = json.load(f)
+  
+  table_header = []
+  table_data = []
+
+  for key in data:
+    head = key
+    value = ""
+    if type(data[key]) == type({}):
+        for key2 in data[key]:
+            head += "/" + key2
+            value = data[key][key2]
+            table_header.append(head)
+            table_data.append(value)
+
+    else:
+        value = data[key]
+        table_header.append(head)
+        table_data.append(value)
+  
+  myTable = PrettyTable(table_header)
+  myTable.add_row(table_data)
+  print(myTable)
   menu()
 
 def main():
