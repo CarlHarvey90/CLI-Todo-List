@@ -18,7 +18,8 @@ def menu():
     "1. Add an item \n"
     "2. Remove an item \n"
     "3. View item list \n"
-    "4. Exit \n")
+    "4. Update task status \n"
+    "5. Exit \n")
   print(menu)
 
 def writeJSON(task):
@@ -92,27 +93,14 @@ def list():
   with open('Todo.json', "r") as f:
     data = json.load(f)
   
-  table_header = []
-  table_data = []
+  table = PrettyTable()
 
-  for key in data:
-    head = key
-    value = ""
-    if type(data[key]) == type({}):
-        for key2 in data[key]:
-            head += "/" + key2
-            value = data[key][key2]
-            table_header.append(head)
-            table_data.append(value)
+  table.field_names = data[0].keys()
 
-    else:
-        value = data[key]
-        table_header.append(head)
-        table_data.append(value)
-  
-  myTable = PrettyTable(table_header)
-  myTable.add_row(table_data)
-  print(myTable)
+  for item in data:
+    table.add_row(item.values())
+
+  print(table)
   menu()
 
 def main():
@@ -124,7 +112,7 @@ def main():
     
     user_input = input()
     
-    if user_input == '4':
+    if user_input == '5':
       print("Exiting Todo List")
       break
     
@@ -140,6 +128,10 @@ def main():
 
     if user_input == '3':
       print("See the list of items below: ")
+      list()
+
+    if user_input == '4':
+      print("Type the ID of the item to update its status: ")
       list()
 
     #print(user_input)
