@@ -43,13 +43,13 @@ def writeJSON(task):
   data.append(input_data)
 
   # Debugging: Print data before writing
-  print("Updated Data:", json.dumps(data, indent=4))
+  #print("Updated Data:", json.dumps(data, indent=4))
 
   # Write updated data back to JSON file
   with open(filename, "w") as file:
     json.dump(data, file, indent=4)
 
-  print("Task added to JSON")
+  print("Task \"" + str(input_data["Task"]) + "\" added to list \n\n")
 
 def removeJSON(a):
   with open('Todo.json', "r") as f:
@@ -87,6 +87,26 @@ def delete(delete_item):
   #print("Item deleted: " + delete_item + "\n")  
   menu()
 
+def updateStatus(updateStatusID):
+  status = "Complete"
+  updateStatusID = int(updateStatusID)
+  print(updateStatusID)
+  with open('Todo.json', "r") as f:
+    data = json.load(f)
+  
+  updated = False
+  for item in data:
+    if item["id"] == updateStatusID:
+      item["Status"] = status
+      updated = True
+  
+  if updated:
+    with open('Todo.json', "w") as file:
+      json.dump(data, file, indent=4)
+    print("Item id " + str(updateStatusID) + " Status updated to " + status)
+  else:
+    print("ID not found")
+
 def list():
   #table = PrettyTable(["ID", "Task", "Status"])
 
@@ -101,7 +121,7 @@ def list():
     table.add_row(item.values())
 
   print(table)
-  menu()
+  #menu()
 
 def main():
   welcome = ("Welcome to the Todo list app. \n\n")
@@ -122,6 +142,7 @@ def main():
       add(new_item)
     
     if user_input == '2':
+      list()
       print("Type the ID of the item to remove it from the list: ")
       remove_item = input()
       delete(remove_item)
@@ -131,8 +152,10 @@ def main():
       list()
 
     if user_input == '4':
-      print("Type the ID of the item to update its status: ")
       list()
+      print("Type the ID of the item to update its status: ")
+      updateStatusID = input()
+      updateStatus(updateStatusID)
 
     #print(user_input)
 if __name__ == '__main__':
