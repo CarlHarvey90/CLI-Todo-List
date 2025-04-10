@@ -1,13 +1,9 @@
 [
     {
-        "id": 0,
-        "Task": "qwer",
-        "Status": "Pending"
-    },
-    {
         "id": 1,
-        "Task": "asdf",
+        "Task": "Create a CLI todo list app in python",
         "Status": "Pending"
+<<<<<<< HEAD
     },
     {
         "id": 2,
@@ -103,5 +99,7 @@
         "id": 22,
         "Task": "Test",
         "Status": "Pending"
+=======
+>>>>>>> 1ec7a7af4a426ca7951438bfc3b5df2ee314ccab
     }
 ]

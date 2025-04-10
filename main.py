@@ -8,7 +8,10 @@ from itertools import count
 def idCount():
   with open('Todo.json', "r") as f:
     data = json.load(f)
-    id = max(item["id"] for item in data)
+    if not data: #check if the list is empty ie. a new user/todo list
+      id = 0
+    else:
+      id = max(item["id"] for item in data)
     counter = count(id + 1)
     #print(counter)
   return next(counter) #returns an integer
@@ -21,6 +24,13 @@ def menu():
     "4. Update task status \n"
     "5. Exit \n")
   print(menu)
+
+def createJSON():
+  filename = "Todo.json"
+  if not os.path.exists(filename):
+    with open(filename, "w") as file: #If file doesn't exist, create the file
+        data = []  #start with an empty list
+        json.dump(data, file, indent=4)
 
 def writeJSON(task):
   filename = "Todo.json"
@@ -37,12 +47,11 @@ def writeJSON(task):
     with open(filename, "r") as file:
       data = json.load(file)  # Load existing data
   else:
-    data = []  # If file doesn't exist or is empty, start with an empty list
+    data = []
 
   # Append new task
   data.append(input_data)
 
-  # Debugging: Print data before writing
   #print("Updated Data:", json.dumps(data, indent=4))
 
   # Write updated data back to JSON file
@@ -57,14 +66,6 @@ def removeJSON(a):
   
   # Find the index of the item where id = user_input
   item_to_remove = next((i for i, item in enumerate(data) if item["id"] == int(a)), None)
-  #print(item_to_remove) 
-  #print("hello")
-
-  #print(data["id"][int(item_to_remove)])
-
-  #if item_to_remove in data:
-  # remove_id = data.pop("id"[item_to_remove])
-  
 
   # If the item with id = 4 is found, pop it
   if item_to_remove is not None:
@@ -106,6 +107,7 @@ def updateStatus(updateStatusID):
     print("Item id " + str(updateStatusID) + " Status updated to " + status)
   else:
     print("ID not found")
+  menu()
 
 def list():
   #table = PrettyTable(["ID", "Task", "Status"])
@@ -126,37 +128,38 @@ def list():
 def main():
   welcome = ("Welcome to the Todo list app. \n\n")
   print(welcome)
+  createJSON() # if file doesnt exist, create the file
   menu()
   #print(menu)
   while True:
     
     user_input = input()
     
-    if user_input == '5':
-      print("Exiting Todo List")
-      break
-    
-    if user_input == '1':
-      print("Type in a item to add to the list: ")
-      new_item = input()
-      add(new_item)
-    
-    if user_input == '2':
-      list()
-      print("Type the ID of the item to remove it from the list: ")
-      remove_item = input()
-      delete(remove_item)
-
-    if user_input == '3':
-      print("See the list of items below: ")
-      list()
-
-    if user_input == '4':
-      list()
-      print("Type the ID of the item to update its status: ")
-      updateStatusID = input()
-      updateStatus(updateStatusID)
-
+    match user_input:
+      case '1':
+        print("Type in an item to add to the list: ")
+        new_item = input()
+        add(new_item)
+      case '2':
+        list()
+        print("Type the ID of the item to remove it from the list: ")
+        remove_item = input()
+        delete(remove_item)
+      case '3':
+        print("See the list of items below: ")
+        list()
+        menu()
+      case '4':
+        list()
+        print("Type the ID of the item to update its status: ")
+        updateStatusID = input()
+        updateStatus(updateStatusID)
+      case '5':
+        print("Exiting Todo List")
+        break
+      case _:
+        print("Your input was not recongnised: ")
+        menu()
     #print(user_input)
 if __name__ == '__main__':
   main()
